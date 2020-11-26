@@ -8,10 +8,10 @@ import asyncio
 import os
 import re
 
-token_path = os.path.dirname( os.path.abspath( __file__ ) )+"/token.txt"
-t = open(token_path, "r", encoding="utf-8")
-token = t.read().split()[0]
-print("Token_key : ", token)
+# token_path = os.path.dirname( os.path.abspath( __file__ ) )+"/token.txt"
+# t = open(token_path, "r", encoding="utf-8")
+# token = t.read().split()[0]
+
 
 game = discord.Game("help is ~명령어")
 bot = commands.Bot(command_prefix='~',Status=discord.Status.online,activity=game)
@@ -132,6 +132,6 @@ async def clear(ctx, number:int=None):
             await ctx.send('이 명령을 사용할 수 있는 권한이 없습니다.')
     else:
         await ctx.send('DM에선 불가합니다.')
-
-
+token = os.environ["BOT_TOKEN"]
+print("Token_key : ", token)
 bot.run(token)
