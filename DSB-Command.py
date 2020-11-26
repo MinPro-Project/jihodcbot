@@ -8,10 +8,6 @@ import asyncio
 import os
 import re
 
-# token_path = os.path.dirname( os.path.abspath( __file__ ) )+"/token.txt"
-# t = open(token_path, "r", encoding="utf-8")
-# token = t.read().split()[0]
-
 try:
     game = discord.Game("help is ~명령어")
     bot = commands.Bot(command_prefix='~',Status=discord.Status.online,activity=game)
@@ -66,7 +62,7 @@ try:
                 print(e)
                 print("An error occurred in executing the 'notice' Command.\n" + box(output)+"\n")
         else:
-            await ctx.send('이 명령을 사용할 수 있는 권한이 없습니다.')
+            await ctx.send(f"{ctx.author.mention}\n이 명령을 사용할 수 있는 권한이 없습니다.")
 
     @bot.command(aliases=['k'], pass_context=True)
     async def kick(ctx, member: discord.Member, *, reason=None):
