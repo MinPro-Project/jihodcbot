@@ -38,6 +38,7 @@ async def on_message(message):
 @bot.command()
 async def 명령어(ctx):
     await ctx.send(f"""{ctx.author.mention}
+d
 ~명령어 : 해당 봇의 명령어를 보여 줍니다.
 ~notice <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
 ~n <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
