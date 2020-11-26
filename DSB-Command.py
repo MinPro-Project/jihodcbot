@@ -38,13 +38,13 @@ try:
     @bot.command()
     async def 명령어(ctx):
         await ctx.send(f"""{ctx.author.mention}
-    ~명령어 : 해당 봇의 명령어를 보여 줍니다.
-    ~notice <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
-    ~n <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
-    ~kick <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 킥합니다.
-    ~k <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 킥합니다.
-    ~ban <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 벤합니다.
-    ~b <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 벤합니다.""")
+~명령어 : 해당 봇의 명령어를 보여 줍니다.
+~notice <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
+~n <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
+~kick <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 킥합니다.
+~k <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 킥합니다.
+~ban <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 벤합니다.
+~b <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 벤합니다.""")
 
     @bot.command(aliases=['n'])
     async def notice(ctx, *args):
