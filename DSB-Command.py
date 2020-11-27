@@ -8,6 +8,10 @@ import asyncio
 import os
 import re
 
+votea = []
+votecreater = ''
+votenum = 0
+
 try:
     game = discord.Game("help is ~명령어")
     bot = commands.Bot(command_prefix='~',Status=discord.Status.online,activity=game)
@@ -35,10 +39,19 @@ try:
     async def 명령어(ctx):
         await ctx.send(f"""{ctx.author.mention}
 ~명령어 : 해당 봇의 명령어를 보여 줍니다.
+
+~votecreate <옵션 개수> <투표 이름> <옵션1> <옵션2> .... : 투표를 생성합니다.
+~vc <옵션 개수> <투표 이름> <옵션1> <옵션2> .... : 투표를 생성합니다.
+
+~vote <투표 번호> <옵션 번호> : <투표 번호>에 해당하는 생성된 투표에 <옵션 번호>에 투표합니다.
+~v <투표 번호> <옵션 번호> : <투표 번호>에 해당하는 생성된 투표에 <옵션 번호>에 투표합니다.
+
 ~notice <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
 ~n <channel tag> <message> : 해당 <Channel tag>한 곳에 <message>를 공지합니다.
+
 ~kick <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 킥합니다.
 ~k <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 킥합니다.
+
 ~ban <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 벤합니다.
 ~b <member tag> <reason> : 해당 <member tag>된 사람을 <reason>(이유)이라는 사유로 벤합니다.""")
 
@@ -131,11 +144,14 @@ try:
                 await ctx.send('이 명령을 사용할 수 있는 권한이 없습니다.')
         else:
             await ctx.send('DM에선 불가합니다.')
-    @bot.command(aliases=['v'], pass_context=True)
-    async def vote(ctx, *args):
+    @bot.command(aliases=['vc'], pass_context=True)
+    async def votecreate(ctx, *args):
         
         if ctx.guild:
             try:
+                global votenum
+                global vote
+                global votecreater
                 cnt = 1
                 title = ''
                 options_num = args[0]
@@ -146,22 +162,62 @@ try:
                         # options_num = int(i)
                         pass
                     else:
-                        title += str(i)
+                        title += str(i)+' '
                     # else:
                     #     options.append(str(i))
                     cnt += 1
+                
                 for j in args[cnt-1:]:
                     options.append(str(j))
                 cnt = 1
                 embed = discord.Embed(title=f"{title}", color=0x00FFFF)
                 embed.add_field(name="생성자", value=ctx.author.mention)
+                embed.add_field(name="번호", value=str(votenum), inline=True)
                 for k in options:
-                    embed.add_field(name=f"Option {cnt}", value=k)
+                    embed.add_field(name=f"Option {cnt}", value=k, inline=False)
+                    cnt+=1
                 await ctx.send(embed=embed)
+                votecreater = ctx.author
+                tmp = [votenum, title, votecreater]
+                
+                for k in options:
+                    tmp.append([k, 0])
+                votea.append(tmp)
+                print(votea)
+                votenum += 1
             except Exception as e:
-                ctx.send('vote function Error')
+                print(e)
         else:
             await ctx.send('DM에선 불가합니다.')
+
+    @bot.command(aliases=['v'], pass_context=True)
+    async def vote(ctx, *args):
+        if ctx.guild:
+            try:
+                global votenum
+                global votea
+                global votecreater
+                
+                votenum_tmp = votea[int(args[0])]
+                if str(args[0]) == str(votenum_tmp[0]):
+                    cnt = 1
+                    for k in votenum_tmp[3:]:
+                        if cnt == int(args[1]):
+                            tmp = int(k[1])+1
+                            k[1] = tmp
+                            embed = discord.Embed(title=F"\"{votenum_tmp[1]}\"에 대한 투표 현황", color=0x00FF00)
+                            embed.add_field(name="생성자", value=votenum_tmp[2].mention)
+                            embed.add_field(name="번호", value=votenum_tmp[0], inline=True)
+                            cnt_ = 1
+                            for row in votenum_tmp[3:]:
+                                embed.add_field(name=f"Option {cnt_}", value=row[0]+" : "+str(row[1]), inline=False)
+                                cnt_ += 1
+                        cnt+=1
+                else:
+                    pass
+                await ctx.send(embed=embed)
+            except Exception as e:
+                print(e)
 
     token = os.environ["BOT_TOKEN"]
     print("Token_key : ", token)
