@@ -131,6 +131,31 @@ try:
                 await ctx.send('이 명령을 사용할 수 있는 권한이 없습니다.')
         else:
             await ctx.send('DM에선 불가합니다.')
+    @bot.command(aliases=['v'], pass_context=True)
+    async def vote(ctx, *args):
+        
+        if ctx.guild:
+            try:
+                cnt = 1
+                title = ''
+                options = []
+                for i in args:
+                    if cnt == 1:
+                        title = str(i)
+                    else:
+                        options = str(i)
+                    cnt += 1
+                cnt = 1
+                embed = discord.Embed(title=f"{title}", color=0x00FFFF)
+                embed.add_field(name="생성자", value=ctx.author.mention)
+                for k in options:
+                    embed.add_field(name=f"Option {cnt}", value=k)
+                await ctx.send(embed=embed)
+            except Exception as e:
+                ctx.send('vote function Error')
+        else:
+            await ctx.send('DM에선 불가합니다.')
+
     token = os.environ["BOT_TOKEN"]
     print("Token_key : ", token)
     bot.run(token)
