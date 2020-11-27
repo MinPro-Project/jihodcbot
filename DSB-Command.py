@@ -138,13 +138,20 @@ try:
             try:
                 cnt = 1
                 title = ''
+                options_num = args[0]
+                tmp = int('-'+str(options_num))
                 options = []
-                for i in args:
+                for i in args[:tmp]:
                     if cnt == 1:
-                        title = str(i)
+                        # options_num = int(i)
+                        pass
                     else:
-                        options = str(i)
+                        title += str(i)
+                    # else:
+                    #     options.append(str(i))
                     cnt += 1
+                for j in args[cnt-1:]:
+                    options.append(str(k))
                 cnt = 1
                 embed = discord.Embed(title=f"{title}", color=0x00FFFF)
                 embed.add_field(name="생성자", value=ctx.author.mention)
