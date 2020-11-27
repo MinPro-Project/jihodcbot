@@ -151,7 +151,7 @@ try:
                     #     options.append(str(i))
                     cnt += 1
                 for j in args[cnt-1:]:
-                    options.append(str(k))
+                    options.append(str(j))
                 cnt = 1
                 embed = discord.Embed(title=f"{title}", color=0x00FFFF)
                 embed.add_field(name="생성자", value=ctx.author.mention)
